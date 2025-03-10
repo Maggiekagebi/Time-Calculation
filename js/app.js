@@ -2,7 +2,7 @@ const { createApp, ref, computed, watch } = Vue;
 
 createApp({
   setup() {
-    // 狀態變數
+    // 時間差計算器狀態變數
     const startHour = ref('');
     const startMinute = ref('');
     const endHour = ref('');
@@ -10,9 +10,24 @@ createApp({
     const result = ref({ hours: null, minutes: null });
     const error = ref('');
     
+    // 未來時間計算器狀態變數
+    const addHours = ref('');
+    const futureTime = ref({
+      current: '',
+      future: '',
+      calculated: false
+    });
+    
     // 選項資料
     const hourOptions = Array.from({ length: 24 }, (_, i) => i);
     const minuteOptions = Array.from({ length: 60 }, (_, i) => i);
+    
+    // 格式化時間函數
+    const formatTime = (date) => {
+      const hours = date.getHours().toString().padStart(2, '0');
+      const minutes = date.getMinutes().toString().padStart(2, '0');
+      return `${hours}:${minutes}`;
+    };
     
     // 計算時間差異
     const calculateTimeDifference = () => {
@@ -53,9 +68,35 @@ createApp({
       }
     };
     
+    // 計算未來時間
+    const calculateFutureTime = () => {
+      try {
+        if (addHours.value === '') {
+          futureTime.value.calculated = false;
+          return;
+        }
+        
+        const now = new Date();
+        const future = new Date();
+        future.setHours(now.getHours() + parseInt(addHours.value));
+        
+        futureTime.value = {
+          current: formatTime(now),
+          future: formatTime(future),
+          calculated: true
+        };
+      } catch (err) {
+        futureTime.value.calculated = false;
+      }
+    };
+    
     // 監聽輸入變化
     watch([startHour, startMinute, endHour, endMinute], () => {
       calculateTimeDifference();
+    });
+    
+    watch(addHours, () => {
+      calculateFutureTime();
     });
     
     // 重置所有輸入
@@ -68,6 +109,16 @@ createApp({
       error.value = '';
     };
     
+    // 重置未來時間計算
+    const resetFutureTime = () => {
+      addHours.value = '';
+      futureTime.value = {
+        current: '',
+        future: '',
+        calculated: false
+      };
+    };
+    
     return {
       startHour,
       startMinute,
@@ -77,7 +128,10 @@ createApp({
       error,
       hourOptions,
       minuteOptions,
-      resetAll
+      resetAll,
+      addHours,
+      futureTime,
+      resetFutureTime
     };
   }
 }).mount('#app');

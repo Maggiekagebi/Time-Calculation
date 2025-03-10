@@ -234,3 +234,46 @@ body {
 .reset-button:active {
   transform: translateY(1px);
 }
+
+/* Future Time Section Styles */
+.future-time-section {
+  width: 100%;
+  margin-top: 2.5rem;
+  border-top: 1px solid #d4d4ff;
+  padding-top: 2.5rem;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #4338ca;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.section-icon {
+  margin-right: 0.5rem;
+}
+
+.section-desc {
+  color: #4b5563;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.future-time {
+  border-left-color: #6d28d9;
+  margin-bottom: 1.5rem;
+}
+
+.future-time .block-title {
+  color: #6d28d9;
+}
+
+.future-result {
+  background: linear-gradient(to right, #6d28d9, #8b5cf6);
+  margin-bottom: 1.5rem;
+}

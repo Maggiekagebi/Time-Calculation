@@ -92,7 +92,6 @@
           <p class="value">
             {{ result.hours }} <span>小時</span> {{ result.minutes }} <span>分鐘</span>
           </p>
-          <p class="label">總計時間</p>
         </div>
         <div v-else class="waiting-result">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -110,6 +109,57 @@
         </svg>
         重置所有輸入
       </button>
+      
+      <!-- Future Time Calculator Section -->
+      <div class="future-time-section">
+        <h2 class="section-title"><span class="section-icon">🔮</span>計算未來時間</h2>
+        <p class="section-desc">根據當前時間計算特定小時後的時間</p>
+        
+        <div class="time-block future-time">
+          <h2 class="block-title">
+            <span>⏰</span>小時增加
+          </h2>
+          <div class="time-inputs">
+            <div class="time-input">
+              <label>小時</label>
+              <select v-model="addHours">
+                <option value="">選擇小時</option>
+                <option v-for="hour in Array.from({ length: 24 }, (_, i) => i)" :key="'add-h-' + hour" :value="hour">
+                  {{ hour }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Future Time Result -->
+        <div class="result-container future-result">
+          <h3>未來時間結果</h3>
+          <div v-if="futureTime.calculated" class="result-value">
+            <p class="value">
+              現在時間: {{ futureTime.current }}
+            </p>
+            <p class="value">
+              {{ addHours }} <span>小時後</span>: {{ futureTime.future }}
+            </p>
+          </div>
+          <div v-else class="waiting-result">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <p>請選擇增加的小時數</p>
+          </div>
+        </div>
+        
+        <!-- Reset Future Time Button -->
+        <button class="reset-button" @click="resetFutureTime">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+            <path d="M3 3v5h5"></path>
+          </svg>
+          重置未來時間計算
+        </button>
+      </div>
     </div>
   </div>
   
