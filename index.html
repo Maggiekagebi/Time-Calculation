@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>時間計算器</title>
+  <!-- Import Vue.js -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <!-- Import CSS -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div id="app">
+    <div class="calculator-container">
+      <!-- Header Section -->
+      <div class="header">
+        <h1>⏱️ 時間計算器</h1>
+        <p>輸入開始和結束時間，計算時間差</p>
+      </div>
+      
+      <!-- Time Input Blocks -->
+      <div class="time-blocks">
+        <!-- Start Time Block -->
+        <div class="time-block start-time">
+          <h2 class="block-title">
+            <span>⏳</span>開始時間
+          </h2>
+          <div class="time-inputs">
+            <div class="time-input">
+              <label>小時</label>
+              <select v-model="startHour">
+                <option value="">選擇小時</option>
+                <option v-for="hour in hourOptions" :key="'start-h-' + hour" :value="hour">
+                  {{ hour.toString().padStart(2, '0') }}
+                </option>
+              </select>
+            </div>
+            
+            <div class="time-input">
+              <label>分鐘</label>
+              <select v-model="startMinute">
+                <option value="">選擇分鐘</option>
+                <option v-for="minute in minuteOptions" :key="'start-m-' + minute" :value="minute">
+                  {{ minute.toString().padStart(2, '0') }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        
+        <!-- End Time Block -->
+        <div class="time-block end-time">
+          <h2 class="block-title">
+            <span>🏁</span>結束時間
+          </h2>
+          <div class="time-inputs">
+            <div class="time-input">
+              <label>小時</label>
+              <select v-model="endHour">
+                <option value="">選擇小時</option>
+                <option v-for="hour in hourOptions" :key="'end-h-' + hour" :value="hour">
+                  {{ hour.toString().padStart(2, '0') }}
+                </option>
+              </select>
+            </div>
+            
+            <div class="time-input">
+              <label>分鐘</label>
+              <select v-model="endMinute">
+                <option value="">選擇分鐘</option>
+                <option v-for="minute in minuteOptions" :key="'end-m-' + minute" :value="minute">
+                  {{ minute.toString().padStart(2, '0') }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Error Message -->
+      <div v-if="error" class="error-message">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+        </svg>
+        {{ error }}
+      </div>
+      
+      <!-- Result Display -->
+      <div class="result-container">
+        <h3>計算結果</h3>
+        <div v-if="result.hours !== null" class="result-value">
+          <p class="value">
+            {{ result.hours }} <span>小時</span> {{ result.minutes }} <span>分鐘</span>
+          </p>
+          <p class="label">總計時間</p>
+        </div>
+        <div v-else class="waiting-result">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <p>請選擇開始和結束時間</p>
+        </div>
+      </div>
+      
+      <!-- Reset Button -->
+      <button class="reset-button" @click="resetAll">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+          <path d="M3 3v5h5"></path>
+        </svg>
+        重置所有輸入
+      </button>
+    </div>
+  </div>
+  
+  <!-- Import JavaScript -->
+  <script src="js/app.js"></script>
+</body>
+</html>
